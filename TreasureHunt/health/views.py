@@ -43,3 +43,17 @@ def delete(request,id):
     delete_blog = Health.objects.get(id=id)
     delete_blog.delete()
     return redirect('home')
+
+
+def search(request):
+    search_keyword = request.GET.get('q')
+
+    if len(search_keyword) >= 1:
+        rental_list = Health.objects.filter(product=search_keyword)
+
+    else:
+        rental_list = Health.objects.all()
+
+    return render(request, 'rental.html', {
+        'rentals': rental_list
+    })
